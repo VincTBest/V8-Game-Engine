@@ -1,7 +1,12 @@
 import sys
 import subprocess
 
-Required = ["pygame", "pyopengl"]
+Required = []
+
+
+def configure(ls):
+    global Required
+    Required = ls
 
 
 def install():
