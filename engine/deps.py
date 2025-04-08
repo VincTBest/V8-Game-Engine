@@ -1,7 +1,7 @@
 import sys
 import subprocess
 
-Required = []
+Required = None
 
 
 def configure(ls):

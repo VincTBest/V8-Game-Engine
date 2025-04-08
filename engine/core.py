@@ -3,6 +3,8 @@
 import pygame
 import os
 
+pygame.init()
+
 # asset loading
 
 textureLib = {}
@@ -21,13 +23,24 @@ def c_changePack(newpack):
     c_loadAssets()
 
 
-def c_basePath(engine=False):
+def c_basePath(engine=False, secondaryLoad=""):
     global pack
     path2 = "game"
     if engine:
         path2 = "engine"
+    else:
+        if secondaryLoad != "":
+            path2 = secondaryLoad
 
     return c_j(path2, pack)
+
+
+def c_addAssets(name, *paths, engine=False, secondaryLoad=""):
+    global textureLib
+    global basePath
+    basePath = c_basePath(engine, secondaryLoad)
+
+    textureLib[name] = c_j(basePath, *paths)
 
 
 def c_loadAssets(engine=False):
@@ -56,6 +69,14 @@ def d_log(msg, t=0, ext=""):
         print(f"[ERROR{ext2}]: {msg}")
     elif t == 3:
         print(f"[{ext2}]: {msg}")
+
+# init
+
+
+def c_init():
+    c_changePack("pack")
+    c_loadAssets(True)
+    c_addAssets("DefaultIcon", "DefaultLogo.png", engine=True)
 
 # windows
 
@@ -86,8 +107,29 @@ class c_globalWindow:
         self.title = title
         self.icon = icon
         self.screenV = pygame.display.set_mode((self.w, self.h))
+        self.running = True
+        self.hiding = False
+        self.tick = 0
         pygame.display.set_caption(title)
         pygame.display.set_icon(c_loadImageLib(icon))
 
     def screen(self):
         return self.screenV
+
+    def getRunning(self):
+        return self.running
+
+    def stopSelf(self):
+        self.running = False
+        self.hiding = True
+
+    def hide(self):
+        self.hiding = True
+        self.running = False
+
+    def show(self):
+        self.running = True
+        self.hiding = False
+
+    def tick(self):
+        self.tick = self.tick + 1
