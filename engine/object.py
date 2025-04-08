@@ -113,7 +113,7 @@ class QText:
 
     def draw(self, screen):
 
-        font = pygame.font.Font(assets.assets[self.font], self.fontsize)
+        font = pygame.font.Font(core.textureLib[self.font], self.fontsize)
         textSurface = font.render(self.text, True, self.color)
         textRect = textSurface.get_rect()
         textRect.center = (self.x, self.y)
@@ -137,7 +137,7 @@ class QTextCTL:
 
     def draw(self, screen):
 
-        font = pygame.font.Font(assets.assets[self.font], self.fontsize)
+        font = pygame.font.Font(core.textureLib[self.font], self.fontsize)
         textSurface = font.render(self.text, True, self.color)
         textRect = textSurface.get_rect()
         textRect.midtop = (self.x, self.y)
@@ -155,7 +155,7 @@ class QTextTL:
 
     def draw(self, screen):
 
-        font = pygame.font.Font(assets.assets[self.font], self.fontsize)
+        font = pygame.font.Font(core.textureLib[self.font], self.fontsize)
         textSurface = font.render(self.text, True, self.color)
         textRect = textSurface.get_rect()
         textRect.topleft = (self.x, self.y)
@@ -175,7 +175,7 @@ class QTextTLLimit:
         self._split_text()
 
     def _split_text(self):
-        font = pygame.font.Font(assets.assets[self.font], self.fontsize)
+        font = pygame.font.Font(core.textureLib[self.font], self.fontsize)
         words = self.text.split()
         line = ""
         self.lines = []
@@ -192,7 +192,7 @@ class QTextTLLimit:
             self.lines.append(line.strip())
 
     def draw(self, screen):
-        font = pygame.font.Font(assets.assets[self.font], self.fontsize)
+        font = pygame.font.Font(core.textureLib[self.font], self.fontsize)
         y_offset = 0
 
         for line in self.lines:

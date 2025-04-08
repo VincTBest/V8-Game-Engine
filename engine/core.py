@@ -2,6 +2,7 @@
 
 import pygame
 import os
+import engine.object as objects
 
 pygame.init()
 
@@ -10,6 +11,7 @@ pygame.init()
 textureLib = {}
 basePath = ""
 pack = "default"
+engineVer = "0.0.3"
 
 
 def c_j(*paths):
@@ -53,6 +55,14 @@ def c_loadAssets(engine=False):
 
     }
 
+
+def c_loadImage(path, newW=None, newH=None):
+    image = pygame.image.load(path)
+    if newW is not None and newH is not None:
+        image = pygame.transform.smoothscale(image, [newW, newH])
+    return image
+
+
 # debug (d_)
 
 
@@ -77,6 +87,7 @@ def c_init():
     c_changePack("pack")
     c_loadAssets(True)
     c_addAssets("DefaultIcon", "DefaultLogo.png", engine=True)
+    c_addAssets("V8Logo2048", "v8-2048x.png", engine=True)
 
 # windows
 
@@ -101,7 +112,7 @@ def c_loadImageLib(name, nSize=None):
 
 
 class c_globalWindow:
-    def __init__(self, title, w, h, icon):
+    def __init__(self, title=f"V8 Engine {engineVer} Window", w=1920/5*3, h=1080/5*3, icon="DefaultIcon", FPS=90):
         self.w = w
         self.h = h
         self.title = title
@@ -110,6 +121,11 @@ class c_globalWindow:
         self.running = True
         self.hiding = False
         self.tick = 0
+        self.clockV = pygame.time.Clock()
+        self.targetFps = FPS
+        self.v8logo = objects.QImg(self.w/2, self.h/2, c_loadImage(textureLib["V8Logo2048"]), True, 512, 512)
+        self.scene = "startup"
+        self.scenario = 0
         pygame.display.set_caption(title)
         pygame.display.set_icon(c_loadImageLib(icon))
 
@@ -131,5 +147,19 @@ class c_globalWindow:
         self.running = True
         self.hiding = False
 
-    def tick(self):
+    def tickSelf(self):
         self.tick = self.tick + 1
+
+    def allTick(self):
+        self.clockV.tick(self.targetFps)
+        self.tickSelf()
+        if self.tick <= 230:
+            self.screenV.fill([121, 99, 255])
+            self.v8logo.draw(self.screenV)
+        else:
+            self.screenV.fill([21, 21, 21])
+        print(self.tick)
+
+    def changeScene(self, newScene, newScenario=0):
+        self.scene = newScene
+        self.scenario = newScenario

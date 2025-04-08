@@ -1,17 +1,16 @@
 import engine.deps as deps
 try:
     import pygame
-    # import pyopengl
     # engine.[...] stuff
     import engine.core as core
-    import engine.object as object
+    import engine.object as objects
 except ImportError:
-    deps.configure(["pygame-ce", "pyopengl"])
+    deps.configure(["pygame"])
     deps.install()
     quit()
 
 core.c_init()
-root = core.c_globalWindow("example", 800, 400, "DefaultIcon")
+root = core.c_globalWindow("V8 Engine", 1920/5*3, 1080/5*3, "DefaultIcon", 90)
 
 while root.getRunning():
 
@@ -19,8 +18,8 @@ while root.getRunning():
         if event.type == pygame.QUIT:
             root.stopSelf()
 
+    root.allTick()
     screen = root.screen()
-    screen.fill([84, 172, 237])
     pygame.display.flip()
 
 if not root.hiding:
