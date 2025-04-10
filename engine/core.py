@@ -11,7 +11,12 @@ pygame.init()
 textureLib = {}
 basePath = ""
 pack = "default"
-engineVer = "0.0.3"
+
+# CONSTANTS
+
+ENGINE_VER = "0.0.2"
+
+# not CONSTANTS
 
 
 def c_j(*paths):
@@ -129,23 +134,26 @@ def c_init():
     c_loadAssets(True)
     c_addAssets("DefaultIcon", "DefaultLogo.png", engine=True)
     c_addAssets("V8Logo2048", "v8-2048x.png", engine=True)
+    c_addAssets("noto", "notosans.ttf", engine=True)
 
 # windows
 
 
 class c_globalWindow:
-    def __init__(self, title=f"V8 Engine {engineVer} Window", w=1920/5*3, h=1080/5*3, icon="DefaultIcon", FPS=90):
+    def __init__(self, title=f"V8 Engine {ENGINE_VER} Window", w=1920/5*3, h=1080/5*3, icon="DefaultIcon", FPS=90):
         self.w = w
         self.h = h
         self.title = title
         self.icon = icon
         self.screenV = pygame.display.set_mode((self.w, self.h))
+        self.e = 5
         self.running = True
         self.hiding = False
         self.tick = 0
         self.clockV = pygame.time.Clock()
         self.targetFps = FPS
         self.v8logo = objects.o_img(self.w/2, self.h/2, c_loadImage(textureLib["V8Logo2048"]), "1 1", True, True, self.w/8*3.5, self.w/8*3.5)
+        self.versionText = objects.o_text(self.w/2, self.h/32*1.70, ENGINE_VER, "noto", 38, "1 1", (39, 39, 39))
         self.scene = "startup"
         self.scenario = 0
         self.tasks = {}
@@ -155,6 +163,7 @@ class c_globalWindow:
         pygame.display.set_icon(c_loadImageLib(icon))
 
     def addTask(self, taskId, taskInfo1="", taskInfo2="", taskInfo3=""):
+        self.tasks[taskId] = {}
         self.tasks[taskId]["info1"] = taskInfo1
         self.tasks[taskId]["info2"] = taskInfo2
         self.tasks[taskId]["info3"] = taskInfo3
@@ -191,15 +200,15 @@ class c_globalWindow:
     def allTick(self):
         self.clockV.tick(self.targetFps)
         self.tickSelf()
-        e = 1
         if self.tick <= 230:
             self.screenV.fill([121, 99, 255])
             self.v8logo.draw(self.screenV)
-            e = 1
+            self.versionText.draw(self.screenV)
+            self.e = 1
         else:
-            if e == 1:
+            if self.e == 1:
                 self.changeTask(0, True)
-            e -= 1
+            self.e -= 1
             self.screenV.fill([21, 21, 21])
 
     def changeScene(self, newScene, newScenario=0):

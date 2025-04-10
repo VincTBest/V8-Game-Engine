@@ -19,7 +19,6 @@ while root.getRunning():
             root.stopSelf()
 
     root.allTick()
-    core.c_addAssets("noto", "notosans.ttf")
     screen = root.screen()
 
     pygame.display.flip()
