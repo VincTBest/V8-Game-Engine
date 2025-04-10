@@ -5,8 +5,103 @@ import os
 
 pygame.init()
 
+# ----------- NEW -----------
 
-class QImageBox:
+
+class o_img:
+    def __init__(self, x, y, img, align="1 1", scale=False, smoothScale=False, w=None, h=None):
+        self.x = x
+        self.y = y
+        self.align_x, self.align_y = map(int, align.split())
+        if not scale:
+            self.img = img
+        else:
+            if smoothScale:
+                self.img = pygame.transform.smoothscale(img, (w, h))
+            else:
+                self.img = pygame.transform.scale(img, (w, h))
+
+    def draw(self, screen):
+
+        imgRect = self.img.get_rect()
+        if self.align_y == 0:
+            setattr(imgRect, "top", self.y)
+        elif self.align_y == 1:
+            setattr(imgRect, "centery", self.y)
+        elif self.align_y == 2:
+            setattr(imgRect, "bottom", self.y)
+
+        if self.align_x == 0:
+            setattr(imgRect, "left", self.x)
+        elif self.align_x == 1:
+            setattr(imgRect, "centerx", self.x)
+        elif self.align_x == 2:
+            setattr(imgRect, "right", self.x)
+
+        screen.blit(self.img, imgRect)
+
+
+class o_text:
+    def __init__(self, x, y, text, fontname, fontsize, align="1 1", fontColor=(195, 195, 195)):
+        self.x = x
+        self.y = y
+        self.align_x, self.align_y = map(int, align.split())
+        self.text = text
+        self.color = fontColor
+        self.font = fontname
+        self.fontsize = fontsize
+
+    def draw(self, screen):
+        font = pygame.font.Font(core.textureLib[self.font], self.fontsize)
+        textSurface = font.render(self.text, True, self.color)
+        textRect = textSurface.get_rect()
+        if self.align_y == 0:
+            setattr(textRect, "top", self.y)
+        elif self.align_y == 1:
+            setattr(textRect, "centery", self.y)
+        elif self.align_y == 2:
+            setattr(textRect, "bottom", self.y)
+
+        if self.align_x == 0:
+            setattr(textRect, "left", self.x)
+        elif self.align_x == 1:
+            setattr(textRect, "centerx", self.x)
+        elif self.align_x == 2:
+            setattr(textRect, "right", self.x)
+        screen.blit(textSurface, textRect)
+
+    def changeText(self, newText, newColor=None, newFont=None):
+        if newColor is not None:
+            self.color = newColor
+        if newFont is not None:
+            self.font = newFont
+        self.text = newText
+
+
+# --------- LEGACY ----------
+
+
+class LegacyImg:
+    def __init__(self, x, y, img, scale, w=0, h=0):
+        self.x = x
+        self.y = y
+        if not scale:
+            self.img = img
+        else:
+            self.img = pygame.transform.smoothscale(img, (w, h))
+
+    def draw(self, screen):
+
+        imgRect = self.img.get_rect()
+        imgRect.center = (self.x, self.y)
+        screen.blit(self.img, imgRect)
+
+    def SetXY(self, x, y):
+        self.x = x
+        self.y = y
+
+
+class LegacyImageBox:
     def __init__(self, x, y, width, height, image_path, border_size):
         self.x, self.y = x, y
         self.width, self.height = width, height
@@ -62,27 +157,7 @@ class QImageBox:
         screen.blit(stretched, (x, y))
 
 
-class QImg:
-    def __init__(self, x, y, img, scale, w=0, h=0):
-        self.x = x
-        self.y = y
-        if not scale:
-            self.img = img
-        else:
-            self.img = pygame.transform.smoothscale(img, (w, h))
-
-    def draw(self, screen):
-
-        imgRect = self.img.get_rect()
-        imgRect.center = (self.x, self.y)
-        screen.blit(self.img, imgRect)
-
-    def SetXY(self, x, y):
-        self.x = x
-        self.y = y
-
-
-class QImgTL:
+class LegacyImgTL:
     def __init__(self, x, y, img, scale, w=0, h=0):
         self.x = x
         self.y = y
@@ -102,7 +177,7 @@ class QImgTL:
         self.y = y
 
 
-class QText:
+class LegacyText:
     def __init__(self, x, y, text, fontsize=24, color=(236, 236, 236), font="Teardown-Regular"):
         self.x = x
         self.y = y
@@ -120,7 +195,7 @@ class QText:
         screen.blit(textSurface, textRect)
 
 
-class QTextCTL:
+class LegacyTextCTL:
     def __init__(self, x, y, text, fontsize=24, custom="", color=(236, 236, 236), font="Teardown-Regular"):
         self.x = x
         self.y = y
@@ -144,7 +219,7 @@ class QTextCTL:
         screen.blit(textSurface, textRect)
 
 
-class QTextTL:
+class LegacyTextTL:
     def __init__(self, x, y, text, fontsize=24, color=(236, 236, 236), font="Teardown-Regular"):
         self.x = x
         self.y = y
@@ -162,7 +237,7 @@ class QTextTL:
         screen.blit(textSurface, textRect)
 
 
-class QTextTLLimit:
+class LegacyTextTLLimit:
     def __init__(self, x, y, text, max_width, fontsize=24, color=(236, 236, 236), font="Teardown-Regular"):
         self.x = x
         self.y = y
@@ -205,7 +280,7 @@ class QTextTLLimit:
         self.text = text
 
 
-class QButton:
+class LegacyButton:
     def __init__(self, x, y, img, ctms, command, scale=False, w=0, h=0):
         self.x = x
         self.y = y
@@ -245,7 +320,7 @@ class QButton:
         self.ctms = ctms
 
 
-class QButtonTL:
+class LegacyButtonTL:
     def __init__(self, x, y, img, ctms, command, scale=False, w=0, h=0):
         self.x = x
         self.y = y

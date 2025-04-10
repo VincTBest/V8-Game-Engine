@@ -63,6 +63,47 @@ def c_loadImage(path, newW=None, newH=None):
     return image
 
 
+def c_loadImageLib(name, nSize=None):
+    global textureLib
+
+    if nSize is None:
+        nSize = [1, 1]
+    path = textureLib[name]
+
+    try:
+        image = pygame.image.load(path).convert_alpha()
+        scaleAmount = 0
+        width, height = image.get_size()
+        new_size = (int(width * (1-scaleAmount/100)*nSize[0]), int(height * (1-scaleAmount/100))*nSize[1])
+        scaled_image = pygame.transform.scale(image, new_size)
+        return scaled_image
+    except pygame.error:
+        d_log(f"Error loading image: {path}", 3)
+        return None
+
+
+class c_timer:
+    def __init__(self, msTime, command, tick, adjust=0, elseCommand=None, times=1):
+        self.time = msTime
+        self.command = command
+        self.elseCommand = elseCommand
+        self.adjust = adjust
+        self.startTick = tick
+        self.endTick = tick + msTime + adjust
+        self.maxRuns = times
+
+    def allTick(self, tick):
+        if self.maxRuns > 0:
+            if tick >= self.endTick:
+                self.command()
+                self.maxRuns -= 1
+                if self.maxRuns > 0:
+                    self.startTick = tick
+                    self.endTick = tick + self.time + self.adjust
+            elif self.elseCommand is not None:
+                self.elseCommand()
+
+
 # debug (d_)
 
 
@@ -92,25 +133,6 @@ def c_init():
 # windows
 
 
-def c_loadImageLib(name, nSize=None):
-    global textureLib
-
-    if nSize is None:
-        nSize = [1, 1]
-    path = textureLib[name]
-
-    try:
-        image = pygame.image.load(path).convert_alpha()
-        scaleAmount = 0
-        width, height = image.get_size()
-        new_size = (int(width * (1-scaleAmount/100)*nSize[0]), int(height * (1-scaleAmount/100))*nSize[1])
-        scaled_image = pygame.transform.scale(image, new_size)
-        return scaled_image
-    except pygame.error:
-        d_log(f"Error loading image: {path}", 3)
-        return None
-
-
 class c_globalWindow:
     def __init__(self, title=f"V8 Engine {engineVer} Window", w=1920/5*3, h=1080/5*3, icon="DefaultIcon", FPS=90):
         self.w = w
@@ -123,7 +145,7 @@ class c_globalWindow:
         self.tick = 0
         self.clockV = pygame.time.Clock()
         self.targetFps = FPS
-        self.v8logo = objects.QImg(self.w/2, self.h/2, c_loadImage(textureLib["V8Logo2048"]), True, 512, 512)
+        self.v8logo = objects.o_img(self.w/2, self.h/2, c_loadImage(textureLib["V8Logo2048"]), "1 1", True, True, 512, 512)
         self.scene = "startup"
         self.scenario = 0
         pygame.display.set_caption(title)
@@ -158,7 +180,6 @@ class c_globalWindow:
             self.v8logo.draw(self.screenV)
         else:
             self.screenV.fill([21, 21, 21])
-        print(self.tick)
 
     def changeScene(self, newScene, newScenario=0):
         self.scene = newScene
