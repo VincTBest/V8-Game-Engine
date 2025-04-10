@@ -145,11 +145,27 @@ class c_globalWindow:
         self.tick = 0
         self.clockV = pygame.time.Clock()
         self.targetFps = FPS
-        self.v8logo = objects.o_img(self.w/2, self.h/2, c_loadImage(textureLib["V8Logo2048"]), "1 1", True, True, 512, 512)
+        self.v8logo = objects.o_img(self.w/2, self.h/2, c_loadImage(textureLib["V8Logo2048"]), "1 1", True, True, self.w/8*3.5, self.w/8*3.5)
         self.scene = "startup"
         self.scenario = 0
+        self.tasks = {}
+        self.deleteBlacklist = [0]
+        self.addTask(0, "V8Logo", "230 Tick long V8 logo", "Can not be deleted")
         pygame.display.set_caption(title)
         pygame.display.set_icon(c_loadImageLib(icon))
+
+    def addTask(self, taskId, taskInfo1="", taskInfo2="", taskInfo3=""):
+        self.tasks[taskId]["info1"] = taskInfo1
+        self.tasks[taskId]["info2"] = taskInfo2
+        self.tasks[taskId]["info3"] = taskInfo3
+        self.tasks[taskId]["isDone"] = False
+
+    def changeTask(self, taskId, isDone):
+        self.tasks[taskId]["isDone"] = isDone
+
+    def deleteTask(self, taskId):
+        if taskId not in self.deleteBlacklist:
+            del self.tasks[taskId]
 
     def screen(self):
         return self.screenV
@@ -175,12 +191,23 @@ class c_globalWindow:
     def allTick(self):
         self.clockV.tick(self.targetFps)
         self.tickSelf()
+        e = 1
         if self.tick <= 230:
             self.screenV.fill([121, 99, 255])
             self.v8logo.draw(self.screenV)
+            e = 1
         else:
+            if e == 1:
+                self.changeTask(0, True)
+            e -= 1
             self.screenV.fill([21, 21, 21])
 
     def changeScene(self, newScene, newScenario=0):
         self.scene = newScene
         self.scenario = newScenario
+
+    def getFps(self):
+        return self.clockV.get_fps()
+
+    def doneWithTask(self, taskId):
+        return self.tasks[taskId]["isDone"]

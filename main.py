@@ -10,8 +10,7 @@ except ImportError:
     quit()
 
 core.c_init()
-core.c_changePack("test")
-root = core.c_globalWindow("V8 Engine", 1920/5*3, 1080/5*3, "DefaultIcon", 90)
+root = core.c_globalWindow("V8 Engine", 1920/5*4, 1080/5*4, "DefaultIcon", 90)
 
 while root.getRunning():
 
