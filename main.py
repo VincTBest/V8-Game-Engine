@@ -1,16 +1,14 @@
 import engine.deps as deps
 try:
     import pygame
-    # engine.[...] stuff
-    import engine.core as core
-    import engine.object as objects
+    import engine.v8 as v8
 except ImportError:
     deps.configure(["pygame"])
     deps.install()
     quit()
 
-core.c_init()
-root = core.c_globalWindow("V8 Engine", 1920/5*4, 1080/5*4, "DefaultIcon", 90)
+v8.core.c_init()
+root = v8.core.c_globalWindow("V8 Engine", 1920/5*4, 1080/5*4, "DefaultIcon", 90)
 
 while root.getRunning():
 
