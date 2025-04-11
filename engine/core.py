@@ -151,6 +151,7 @@ class c_globalWindow:
         self.hiding = False
         self.tick = 0
         self.clockV = pygame.time.Clock()
+        self.dtV = 1
         self.targetFps = FPS
         self.v8logo = objects.o_img(self.w/2, self.h/2, c_loadImage(textureLib["V8Logo2048"]), "1 1", True, True, self.w/8*3.5, self.w/8*3.5)
         self.versionText = objects.o_text(self.w/2, self.h/32*1.70, ENGINE_VER, "noto", 38, "1 1", (39, 39, 39))
@@ -198,7 +199,7 @@ class c_globalWindow:
         self.tick = self.tick + 1
 
     def allTick(self):
-        self.clockV.tick(self.targetFps)
+        self.dtV = self.clockV.tick(self.targetFps)
         self.tickSelf()
         if self.tick <= 230:
             self.screenV.fill([121, 99, 255])
@@ -210,6 +211,9 @@ class c_globalWindow:
                 self.changeTask(0, True)
             self.e -= 1
             self.screenV.fill([21, 21, 21])
+
+    def deltaTime(self):
+        return self.dtV
 
     def changeScene(self, newScene, newScenario=0):
         self.scene = newScene
