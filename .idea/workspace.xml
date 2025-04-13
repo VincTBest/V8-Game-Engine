@@ -5,7 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0af8212f-09cb-4874-9611-8d2e29f50c2e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/engine/tilemap.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tilesets_edit/10_dirt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tilesets_edit/11_roofs.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tilesets_edit/12_extra1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tilesets_edit/13_extra2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tilesets_edit/14_human_sprite_base.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tilesets_edit/1_terrain.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tilesets_edit/2_indoors.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tilesets_edit/3_plants.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tilesets_edit/4_buildings.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tilesets_edit/5_waterfall.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tilesets_edit/6_floors.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tilesets_edit/7_grass_cliff.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tilesets_edit/8_cave.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tilesets_edit/9_beach.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/tools.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/v8.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/v8.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,17 +52,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Python.lang.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.tools.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Python.lang.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.tools.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Misi\PycharmProjects\V8 [Game Engine]\engine" />

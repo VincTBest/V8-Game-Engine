@@ -14,23 +14,31 @@ pack = "default"
 
 # CONSTANTS
 
-ENGINE_VER = "0.0.2"
+ENGINE_VER = "0.0.3"
 
 # not CONSTANTS
 
 
 def c_j(*paths):
+    """
+    Joins one or more path segments intelligently.
+    """
     return os.path.join(*paths)
 
 
 def c_changePack(newpack):
-    """Changes the active texture pack and reloads assets."""
+    """
+    Changes the active texture pack and reloads assets.
+    """
     global pack
     pack = newpack
     c_loadAssets()
 
 
 def c_basePath(engine=False, secondaryLoad=""):
+    """
+    Changes the base path textures are loaded in.
+    """
     global pack
     path2 = "game"
     if engine:
@@ -42,7 +50,10 @@ def c_basePath(engine=False, secondaryLoad=""):
     return c_j(path2, pack)
 
 
-def c_addAssets(name, *paths, engine=False, secondaryLoad=""):
+def c_addAssets(name: str, *paths, engine=False, secondaryLoad=""):
+    """
+    Adds assets to the textureLib.
+    """
     global textureLib
     global basePath
     basePath = c_basePath(engine, secondaryLoad)
@@ -51,6 +62,9 @@ def c_addAssets(name, *paths, engine=False, secondaryLoad=""):
 
 
 def c_loadAssets(engine=False):
+    """
+    Loads (and resets) the assets in textureLib.
+    """
     global textureLib
     global basePath
     basePath = c_basePath(engine)
@@ -61,14 +75,20 @@ def c_loadAssets(engine=False):
     }
 
 
-def c_loadImage(path, newW=None, newH=None):
+def c_loadImage(path: str, newW=None, newH=None):
+    """
+    Loads an image into a surface.
+    """
     image = pygame.image.load(path)
     if newW is not None and newH is not None:
         image = pygame.transform.smoothscale(image, [newW, newH])
     return image
 
 
-def c_loadImageLib(name, nSize=None):
+def c_loadImageLib(name: str, nSize=None):
+    """
+    Loads an image from the textureLib.
+    """
     global textureLib
 
     if nSize is None:
@@ -88,7 +108,10 @@ def c_loadImageLib(name, nSize=None):
 
 
 class c_timer:
-    def __init__(self, msTime, command, tick, adjust=0, elseCommand=None, times=1):
+    """
+    Creates a timer that runs a command every [msTime] ticks [times] times.
+    """
+    def __init__(self, msTime: float, command, tick: int, adjust=0, elseCommand=None, times=1):
         self.time = msTime
         self.command = command
         self.elseCommand = elseCommand
@@ -97,7 +120,7 @@ class c_timer:
         self.endTick = tick + msTime + adjust
         self.maxRuns = times
 
-    def allTick(self, tick):
+    def allTick(self, tick: int):
         if self.maxRuns > 0:
             if tick >= self.endTick:
                 self.command()
@@ -112,7 +135,10 @@ class c_timer:
 # debug (d_)
 
 
-def d_log(msg, t=0, ext=""):
+def d_log(msg: str, t=0, ext=""):
+    """
+    Logs a message to the console.
+    """
     ext2 = ""
     if ext != "":
         ext2 = f"::{ext}"
@@ -124,12 +150,15 @@ def d_log(msg, t=0, ext=""):
     elif t == 2:
         print(f"[ERROR{ext2}]: {msg}")
     elif t == 3:
-        print(f"[{ext2}]: {msg}")
+        print(f"[C|{ext2}]: {msg}")
 
 # init
 
 
 def c_init():
+    """
+    Initializes the core package.
+    """
     c_changePack("pack")
     c_loadAssets(True)
     c_addAssets("DefaultIcon", "DefaultLogo.png", engine=True)
@@ -140,6 +169,9 @@ def c_init():
 
 
 class c_globalWindow:
+    """
+    Creates a window that can be drawn on.
+    """
     def __init__(self, title=f"V8 Engine {ENGINE_VER} Window", w=1920/5*3, h=1080/5*3, icon="DefaultIcon", FPS=90):
         self.w = w
         self.h = h
@@ -163,42 +195,72 @@ class c_globalWindow:
         pygame.display.set_caption(title)
         pygame.display.set_icon(c_loadImageLib(icon))
 
-    def addTask(self, taskId, taskInfo1="", taskInfo2="", taskInfo3=""):
+    def addTask(self, taskId: int, taskInfo1="", taskInfo2="", taskInfo3=""):
+        """
+        Adds a task.
+        """
         self.tasks[taskId] = {}
         self.tasks[taskId]["info1"] = taskInfo1
         self.tasks[taskId]["info2"] = taskInfo2
         self.tasks[taskId]["info3"] = taskInfo3
         self.tasks[taskId]["isDone"] = False
 
-    def changeTask(self, taskId, isDone):
+    def changeTask(self, taskId: int, isDone: bool):
+        """
+        Changes a task.
+        """
         self.tasks[taskId]["isDone"] = isDone
 
-    def deleteTask(self, taskId):
+    def deleteTask(self, taskId: int):
+        """
+        Deletes a task.
+        """
         if taskId not in self.deleteBlacklist:
             del self.tasks[taskId]
 
-    def screen(self):
+    def screen(self) -> pygame.surface:
+        """
+        Returns the main surface.
+        """
         return self.screenV
 
-    def getRunning(self):
+    def getRunning(self) -> bool:
+        """
+        Returns if the window is running.
+        """
         return self.running
 
     def stopSelf(self):
+        """
+        Stops the window.
+        """
         self.running = False
         self.hiding = True
 
     def hide(self):
+        """
+        Canceled feature.
+        """
         self.hiding = True
         self.running = False
 
     def show(self):
+        """
+        Canceled feature.
+        """
         self.running = True
         self.hiding = False
 
     def tickSelf(self):
+        """
+        Ticks the window.
+        """
         self.tick = self.tick + 1
 
     def allTick(self):
+        """
+        This script needs to run every tick.
+        """
         self.dtV = self.clockV.tick(self.targetFps)
         self.tickSelf()
         if self.tick <= 230:
@@ -212,15 +274,27 @@ class c_globalWindow:
             self.e -= 1
             self.screenV.fill([21, 21, 21])
 
-    def deltaTime(self):
+    def deltaTime(self) -> float:
+        """
+        Returns the clock's delta time.
+        """
         return self.dtV
 
-    def changeScene(self, newScene, newScenario=0):
+    def changeScene(self, newScene: str, newScenario=0):
+        """
+        Changes scene and scenario.
+        """
         self.scene = newScene
         self.scenario = newScenario
 
-    def getFps(self):
+    def getFps(self) -> float:
+        """
+        Returns the clock's FPS.
+        """
         return self.clockV.get_fps()
 
-    def doneWithTask(self, taskId):
+    def doneWithTask(self, taskId: int):
+        """
+        Returns if a task is done.
+        """
         return self.tasks[taskId]["isDone"]

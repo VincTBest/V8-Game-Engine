@@ -10,6 +10,8 @@ except ImportError:
 v8.core.c_init()
 root = v8.core.c_globalWindow("V8 Engine", 1920/5*4, 1080/5*4, "DefaultIcon", 90)
 
+map1 = v8.tile_map.tm_loadTmxMap(".\\map1.tmx")
+
 while root.getRunning():
 
     for event in pygame.event.get():
