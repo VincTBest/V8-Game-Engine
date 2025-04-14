@@ -1,4 +1,6 @@
 import engine.core as core
+import engine.debug as c
+c.d_log("Module \"object.py\" as \"objects\" loaded.")
 
 import pygame
 import os

@@ -1,3 +1,5 @@
+import engine.debug as c
+c.d_log("Module \"lang.py\" as \"lang\" loaded.")
 
 LANG = "en"
 LANG_LIB = {}

@@ -1,5 +1,8 @@
 import os
 import pygame
+import engine.debug as c
+c.d_log("Module \"tilemap.py\" as \"tile_map\" loaded.")
+
 try:
     import pytmx
 except ImportError:

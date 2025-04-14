@@ -3,6 +3,8 @@
 import pygame
 import os
 import engine.object as objects
+import engine.debug as d
+d.d_log("Module \"core.py\" as \"core\" loaded.")
 
 pygame.init()
 
@@ -103,7 +105,7 @@ def c_loadImageLib(name: str, nSize=None):
         scaled_image = pygame.transform.scale(image, new_size)
         return scaled_image
     except pygame.error:
-        d_log(f"Error loading image: {path}", 3)
+        d.d_log(f"Error loading image: {path}", 3)
         return None
 
 
@@ -131,26 +133,6 @@ class c_timer:
             elif self.elseCommand is not None:
                 self.elseCommand()
 
-
-# debug (d_)
-
-
-def d_log(msg: str, t=0, ext=""):
-    """
-    Logs a message to the console.
-    """
-    ext2 = ""
-    if ext != "":
-        ext2 = f"::{ext}"
-
-    if t == 0:
-        print(f"[INFO{ext2}]: {msg}")
-    elif t == 1:
-        print(f"[WARN{ext2}]: {msg}")
-    elif t == 2:
-        print(f"[ERROR{ext2}]: {msg}")
-    elif t == 3:
-        print(f"[C|{ext2}]: {msg}")
 
 # init
 
@@ -191,9 +173,29 @@ class c_globalWindow:
         self.scenario = 0
         self.tasks = {}
         self.deleteBlacklist = [0]
-        self.addTask(0, "V8Logo", "230 Tick long V8 logo", "Can not be deleted")
+        self.addTask(0, "V8Logo", "50 Tick long V8 logo", "Can not be deleted")
+        self.v8logoDisable = False
         pygame.display.set_caption(title)
         pygame.display.set_icon(c_loadImageLib(icon))
+
+    def configure(self, v8logoDisable=None, FPS=None, w=None, h=None, title=None, icon=None, running=None):
+        """
+        Configure variables stored in the window.
+        """
+        if v8logoDisable is not None:
+            self.v8logoDisable = v8logoDisable
+        if FPS is not None:
+            self.targetFps = FPS
+        if w is not None:
+            self.w = w
+        if h is not None:
+            self.h = h
+        if title is not None:
+            self.title = title
+        if icon is not None:
+            self.icon = icon
+        if running is not None:
+            self.running = running
 
     def addTask(self, taskId: int, taskInfo1="", taskInfo2="", taskInfo3=""):
         """
@@ -263,16 +265,17 @@ class c_globalWindow:
         """
         self.dtV = self.clockV.tick(self.targetFps)
         self.tickSelf()
-        if self.tick <= 230:
-            self.screenV.fill([121, 99, 255])
-            self.v8logo.draw(self.screenV)
-            self.versionText.draw(self.screenV)
-            self.e = 1
+        self.screenV.fill([18, 18, 18])
+        if self.tick <= 50:
+            if not self.v8logoDisable:
+                self.screenV.fill([121, 99, 255])
+                self.v8logo.draw(self.screenV)
+                self.versionText.draw(self.screenV)
+                self.e = 1
         else:
             if self.e == 1:
                 self.changeTask(0, True)
             self.e -= 1
-            self.screenV.fill([21, 21, 21])
 
     def deltaTime(self) -> float:
         """

@@ -5,23 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0af8212f-09cb-4874-9611-8d2e29f50c2e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/engine/tilemap.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tilesets_edit/10_dirt.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tilesets_edit/11_roofs.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tilesets_edit/12_extra1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tilesets_edit/13_extra2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tilesets_edit/14_human_sprite_base.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tilesets_edit/1_terrain.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tilesets_edit/2_indoors.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tilesets_edit/3_plants.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tilesets_edit/4_buildings.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tilesets_edit/5_waterfall.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tilesets_edit/6_floors.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tilesets_edit/7_grass_cliff.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tilesets_edit/8_cave.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tilesets_edit/9_beach.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/debug.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/keys.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/map1.tmx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/lang.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/lang.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/object.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/object.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/tilemap.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/tilemap.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/tools.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine/v8.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/v8.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />

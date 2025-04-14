@@ -1,4 +1,5 @@
-import engine.core as core
+import engine.debug as c
+c.d_log("Module \"tools.py\" as \"tools\" loaded.")
 
 
 def t_numerate(char: str, addressedChars=None):
